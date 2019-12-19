@@ -1,49 +1,45 @@
-<template>
-  <div>
+<template id="posts">
+  <div class="container">
     <h1>Users:</h1>
     <ul>
-      <li v-for="user in users" :key="user.id" v-text="user.name"></li>
+      <li v-for="person in people" :key="person.id" v-text="person.name"></li>
     </ul>
     <h1>Posts:</h1>
-    <ul>
-      <li v-for="post in posts" :key="post.id" v-text="post.body"></li>
-    </ul>
+    <div class="card" v-for="post in posts" :key="post.id">
+      <h4 v-text="post.title"></h4>
+      <p v-text="post.body"></p>
+      <div class="username" v-for="person in people" :key="person.id">
+        <p v-if="post.userId === person.id" v-text="person.name"></p>
+      </div>
+    </div>\
   </div>
 </template>
 
 <script>
-import axios from "axios";
-window.axios = require("axios");
-
 export default {
-  methods: {
-    getPosts: async function() {
-      await axios
-        .get("https://jsonplaceholder.typicode.com/posts")
-        .then(res => {
-          console.log(res);
-          this.posts = res.data;
-        });
-    },
-    getUsers: function() {
-      axios.get("https://jsonplaceholder.typicode.com/users").then(res => {
-        console.log(res);
-        this.users = res.data;
-      });
-    }
-  },
-  mounted: function() {
-    this.getUsers();
-    this.getPosts();
-  },
+  props: ["people", "posts"],
   data: function() {
     return {
-      posts: null,
-      users: null
+      users: this.people,
+      postItems: this.posts
     };
-  }
+  },
+  methods: {}
 };
 </script>
 
-<style>
+<style lang="scss">
+.container {
+  background-color: aquamarine;
+  text-align: center;
+  width: 80%;
+  margin: 0 auto;
+  .card {
+    border: 1px solid black;
+    margin: 10px;
+    .username {
+      color: blueviolet;
+    }
+  }
+}
 </style>
