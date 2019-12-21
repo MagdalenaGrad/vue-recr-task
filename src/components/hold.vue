@@ -1,24 +1,19 @@
 <template id="posts">
   <div class="container">
-    <div class="card" v-for="(post, i) in displayedPosts" :key="i">
+    <div class="card" v-for="(post, i) in posts" :key="i">
       <h4>{{ post.title }}</h4>
       <div @click="deletePost(post.id, i)">x</div>
       <p>
         {{ shrink(post.body) }}
         <span class="show">...</span>
       </p>
-      <div class="username" v-for="user in users" :key="user.id + 'l'">
+      <div class="username" v-for="user in users" :key="user.id">
         <p v-if="post.userId === user.id">{{ user.name }}</p>
       </div>
     </div>
-    <button type="button" v-if="page != 1" @click="page--">prev</button>
-    <button
-      type="button"
-      v-for="(pageNumber, i) in pages.slice(page - 1, page + 5)"
-      v-bind:key="i + 'm'"
-      @click="page=pageNumber"
-    >{{ pageNumber }}</button>
-    <button type="button" @click="page++" v-if="page < pages.length">next</button>
+    <button type="button">prev</button>
+    <button type="button">1</button>
+    <button type="button">next</button>
   </div>
 </template>
 
@@ -60,37 +55,15 @@ export default {
           console.log(res, this.posts);
         });
     },
-    paginate: function(posts) {
-      let page = this.page;
-      let perPage = this.perPage;
-      let from = page * perPage - perPage;
-      let to = page * perPage;
-      return posts.slice(from, to);
-    },
     shrink: function(str) {
       return str.substring(0, 80);
-    },
-    setPages: function() {
-      let numberOfPages = Math.ceil(this.posts.length / this.perPage);
-      for (let i = 1; i <= numberOfPages; i++) {
-        this.pages.push(i);
-      }
     }
   },
   created: function() {
     this.getUsers();
     this.getPosts();
   },
-  watch: {
-    posts() {
-      this.setPages();
-    }
-  },
-  computed: {
-    displayedPosts() {
-      return this.paginate(this.posts);
-    }
-  }
+  mounted: function() {}
 };
 </script>
 

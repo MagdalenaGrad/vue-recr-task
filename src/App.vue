@@ -1,43 +1,19 @@
 <template>
   <div id="app">
-    <app-posts :people="users" :posts="posts"></app-posts>
+    <h1>Posts:</h1>
+    <app-posts></app-posts>
+    <!-- propsy do komponentu: :people="users" :posts="posts" -->
+    <!-- <p>{{ shrink() }}</p> -->
   </div>
 </template>
 
 <script>
 import Posts from "./components/Posts.vue";
-import axios from "axios";
-window.axios = require("axios");
 
 export default {
   name: "app",
   components: {
     appPosts: Posts
-  },
-  data: function() {
-    return {
-      posts: null,
-      users: null
-    };
-  },
-  props: {},
-  methods: {
-    getPosts: function() {
-      axios.get("https://jsonplaceholder.typicode.com/posts").then(res => {
-        console.log(res);
-        this.posts = res.data;
-      });
-    },
-    getUsers: function() {
-      axios.get("https://jsonplaceholder.typicode.com/users").then(res => {
-        console.log(res);
-        this.users = res.data;
-      });
-    }
-  },
-  mounted: function() {
-    this.getUsers();
-    this.getPosts();
   }
 };
 </script>
