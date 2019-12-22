@@ -7,7 +7,6 @@
       <div class="username" v-for="user in users" :key="user.id + 'l'">
         <p v-if="post.userId === user.id">{{ user.name }}</p>
       </div>
-      <div class="inner-card"></div>
     </div>
     <!-- pagination buttons -->
     <div class="pagination">
@@ -65,6 +64,8 @@ export default {
           console.log(res, this.posts);
         });
     },
+    // pagination methods:
+
     paginate: function(posts) {
       let page = this.page;
       let perPage = this.perPage;

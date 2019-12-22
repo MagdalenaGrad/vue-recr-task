@@ -62,7 +62,7 @@ html {
         position: relative;
         background-color: #9fffde;
         padding: 5px 15px;
-        margin: 15px 20%;
+        margin: 39px 20%;
         @media (max-width: 768px) {
           width: 80%;
           margin: 15px auto;
@@ -84,8 +84,17 @@ html {
         height: 100%;
         top: -10px;
         right: -10px;
-        border: 1px solid #e56399;
+        border: 2px solid #e56399;
         z-index: -1;
+      }
+      .card::after {
+        content: "";
+        position: absolute;
+        border-top: 2px solid #e56399;
+        width: 30%;
+        bottom: 6px;
+        right: 0px;
+        z-index: 1;
       }
       .pag-button {
         background-color: inherit;
