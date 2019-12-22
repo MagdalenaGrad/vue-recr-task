@@ -1,16 +1,14 @@
 <template id="posts">
   <div class="container">
     <div class="card" v-for="(post, i) in displayedPosts" :key="i">
-      <h4>{{ post.title }}</h4>
       <div @click="deletePost(post.id, i)">x</div>
-      <p>
-        {{ shrink(post.body) }}
-        <span class="show">...</span>
-      </p>
+      <h4>{{ post.title }}</h4>
+      <app-post-body :pbody="post.body"></app-post-body>
       <div class="username" v-for="user in users" :key="user.id + 'l'">
         <p v-if="post.userId === user.id">{{ user.name }}</p>
       </div>
     </div>
+    <!-- pagination buttons -->
     <button type="button" v-if="page != 1" @click="page--">prev</button>
     <button
       type="button"
@@ -23,10 +21,14 @@
 </template>
 
 <script>
+import PostBody from "./PostBody.vue";
 import axios from "axios";
 window.axios = require("axios");
 
 export default {
+  components: {
+    appPostBody: PostBody
+  },
   data: function() {
     return {
       posts: [],
@@ -36,7 +38,6 @@ export default {
       pages: []
     };
   },
-  props: {},
   methods: {
     getPosts: function() {
       axios.get("https://jsonplaceholder.typicode.com/posts").then(res => {
@@ -67,9 +68,6 @@ export default {
       let to = page * perPage;
       return posts.slice(from, to);
     },
-    shrink: function(str) {
-      return str.substring(0, 80);
-    },
     setPages: function() {
       let numberOfPages = Math.ceil(this.posts.length / this.perPage);
       for (let i = 1; i <= numberOfPages; i++) {
@@ -95,22 +93,5 @@ export default {
 </script>
 
 <style lang="scss">
-.container {
-  background-color: aquamarine;
-  text-align: center;
-  width: 80%;
-  margin: 0 auto;
-  .show {
-    cursor: pointer;
-    border: 1px solid black;
-  }
-  .card {
-    border: 1px solid black;
-    margin: 10px;
-    .username {
-      color: blueviolet;
-    }
-  }
-}
 </style>
 
