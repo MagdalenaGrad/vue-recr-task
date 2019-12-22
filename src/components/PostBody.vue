@@ -26,4 +26,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+button {
+  border: none;
+  background-color: inherit;
+  border-bottom: 1px solid black;
+  cursor: pointer;
+}
 </style>

@@ -1,22 +1,26 @@
 <template id="posts">
   <div class="container">
     <div class="card" v-for="(post, i) in displayedPosts" :key="i">
-      <div @click="deletePost(post.id, i)">x</div>
+      <div class="x" @click="deletePost(post.id, i)">x</div>
       <h4>{{ post.title }}</h4>
       <app-post-body :pbody="post.body"></app-post-body>
       <div class="username" v-for="user in users" :key="user.id + 'l'">
         <p v-if="post.userId === user.id">{{ user.name }}</p>
       </div>
+      <div class="inner-card"></div>
     </div>
     <!-- pagination buttons -->
-    <button type="button" v-if="page != 1" @click="page--">prev</button>
-    <button
-      type="button"
-      v-for="(pageNumber, i) in pages.slice(page - 1, page + 5)"
-      v-bind:key="i + 'm'"
-      @click="page=pageNumber"
-    >{{ pageNumber }}</button>
-    <button type="button" @click="page++" v-if="page < pages.length">next</button>
+    <div class="pagination">
+      <button class="pag-button" type="button" v-if="page != 1" @click="page--">prev</button>
+      <button
+        class="pag-button"
+        type="button"
+        v-for="(pageNumber, i) in pages.slice(page - 1, page + 5)"
+        v-bind:key="i + 'm'"
+        @click="page=pageNumber"
+      >{{ pageNumber }}</button>
+      <button class="pag-button" type="button" @click="page++" v-if="page < pages.length">next</button>
+    </div>
   </div>
 </template>
 
@@ -92,6 +96,6 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 </style>
 
