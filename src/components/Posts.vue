@@ -14,7 +14,7 @@
       <button
         class="pag-button"
         type="button"
-        v-for="(pageNumber, i) in pages.slice(page - 1, page + 5)"
+        v-for="(pageNumber, i) in pages.slice(page, page + 5)"
         v-bind:key="i + 'm'"
         @click="page=pageNumber"
       >{{ pageNumber }}</button>
@@ -75,9 +75,12 @@ export default {
     },
     setPages: function() {
       let numberOfPages = Math.ceil(this.posts.length / this.perPage);
-      for (let i = 1; i <= numberOfPages; i++) {
-        this.pages.push(i);
-      }
+      this.pages = Array.from(Array(numberOfPages).keys());
+
+      // for (let i = 1; i <= numberOfPages; i++) {
+      //   this.pages.push(i);
+      // }
+      console.log(this.pages, this.page);
     }
   },
   created: function() {
